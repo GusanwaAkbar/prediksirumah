@@ -51,27 +51,27 @@
                                 Main Map
                             </a>
 
-                            <a class="nav-link" href="./sistem1">
+                            <a class="nav-link" href="./run1">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Sistem 1
                             </a>
 
-                            <a class="nav-link" href="./sistem2">
+                            <a class="nav-link" href="./run2">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Sistem 2
                             </a>
 
-                            <a class="nav-link" href="./sistem3">
+                            <a class="nav-link" href="./run3">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Sistem 3
                             </a>
 
-                            <a class="nav-link" href="./sistem4">
+                            <a class="nav-link" href="./run4">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Sistem 4
                             </a>
                             
-                            <a class="nav-link" href="./sistem5">
+                            <a class="nav-link" href="./run5">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Sistem 5
                             </a>
@@ -131,10 +131,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
-                    </div>
+
                 </nav>
             </div>
             <div id="layoutSidenav_content">
@@ -226,182 +223,30 @@
                         
                     </div>
 
-                    <div class="row">
-                        <div class="col-xl-8">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-chart-area me-1"></i>
-                                    <h1>{{mean_error}}</h1>
-                                    Peta Asset
-                                </div>
-                              
-                                <div class="card-body">
-                                    {{map_html|safe}}
-                                </div>
+                    <h1>Perhitungan MAPE</h1>
+                    <!-- Your existing HTML code -->
 
-                                
+                    <div class="container mt-4">
+                        <div class="card">
+                            <div class="card-header">
+                                Mean Absolute Error
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    Total Error: {{ total_error }}
+                                </p>
+                                <p class="card-text">
+                                    Number of Data Points: {{ n_data }}
+                                </p>
+                                <p class="card-text">
+                                    Mean Error: {{ mean_error }}
+                                </p>
                             </div>
                         </div>
-
-
-                        
-
-
-                        <!-- <div class="col-xl-4">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-chart-bar me-1"></i>
-                                    Legend
-                                </div>
-                                <div class="card-body">
-                                    {{ legend_html|safe }}
-                                </div>
-                            </div>
-                        </div> -->
                     </div>
 
-                    <div class="container-fluid px-4">
+<!-- Your existing HTML code -->
 
-                        <h1>Asset Detail</h1>
-                        
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    {% for column in df.columns %}
-                                        <th>{{ column }}</th>
-                                    {% endfor %}
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {% for index, row in df.iterrows %}
-                                    <tr>
-                                        {% for value in row %}
-                                            <td>{{ value }}</td>
-                                        {% endfor %}
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-
-                    </div>
-
-                    <div class="container-fluid px-4">
-
-                        <h1>Accuracy, Precicision, Recall, Each Class</h1>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Class</th>
-                                    <th scope="col">Precision</th>
-                                    <th scope="col">Recall</th>
-                                    <th scope="col">F1 Score</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">Sawah</th>
-                                    <td>{{ akurasi.0 }}</td>
-                                    <td>{{ presisi.0 }}</td>
-                                    <td>{{ recall.0 }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Perumahan</th>
-                                    <td>{{ akurasi.1 }}</td>
-                                    <td>{{ presisi.1 }}</td>
-                                    <td>{{ recall.1 }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Taman</th>
-                                    <td>{{ akurasi.2 }}</td>
-                                    <td>{{ presisi.2 }}</td>
-                                    <td>{{ recall.2 }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Ruko</th>
-                                    <td>{{ akurasi.3 }}</td>
-                                    <td>{{ presisi.3 }}</td>
-                                    <td>{{ recall.3 }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Kantor</th>
-                                    <td>{{ akurasi.4 }}</td>
-                                    <td>{{ presisi.4 }}</td>
-                                    <td>{{ recall.4 }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Pasar</th>
-                                    <td>{{ akurasi.5 }}</td>
-                                    <td>{{ presisi.5 }}</td>
-                                    <td>{{ recall.5 }}</td>
-                                </tr>
-                                <!-- Rows for other classes -->
-                            </tbody>
-
-                            
-
-
-                        </table>
-
-                        <div class="conrainer-fluid px-4">
-
-                            <h2> True Positive, False positive, False Negative Each classes</h2>
-
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Class</th>
-                                        <th>True Positives (TP)</th>
-                                        <th>False Negatives (FP)</th>
-                                        <th>False Positives (FN)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for label, tp, fp, fn in tp %}
-                                    <tr>
-                                        <td>{{ label }}</td>
-                                        <td>{{ tp }}</td>
-                                        <td>{{ fp }}</td>
-                                        <td>{{ fn }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-
-
-                        </div>
-
-                        <h2>Metrics Total</h2>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Metric</th>
-                                        <th scope="col">Value</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Total Accuracy</th>
-                                        <td>{{ t_akurasi }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Total Precision</th>
-                                        <td>{{ t_presisi }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Total Recall</th>
-                                        <td>{{ t_recall }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Total f1 Score</th>
-                                        <td>{{ t_f1 }}</td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-  \
-
-                    </div>
 
 
 

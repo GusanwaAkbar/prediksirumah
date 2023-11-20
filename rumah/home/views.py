@@ -254,14 +254,520 @@ def home(request):
 
 
 
+    
+    return render(request, 'index3.html', context)
+
+
+
+# Create your views here.
+def run1(request):
+
+    selected_columns = [
+        'Titik_koordinat',
+        'Nama_debitur',
+        'Nama_Pemberi_Tugas',
+        'Kota_Kabupaten',
+        'LT',
+        'LB',
+        'Tujuan',
+        'Obyek',
+        'Fee_total',
+        'dpp',
+        'ppn',
+        'Indikasi_nilai',
+        'Jumlah_kamar',
+        'Jumlah_kamarmandi',
+        'Jumlah_lantai',
+        'Pusat_kota',
+    ]
+
+    # Query all objects from the Table_rumah model
+    queryset = Table_rumah.objects.all()
+
+    # Convert the queryset to a pandas DataFrame
+    df = pd.DataFrame(list(queryset.values()))
+    #df selected columns
+    df_print = df[selected_columns]
+    
+    #make the map
+    map_html = make_map(df_print)
+
+    # Display the DataFrame
+    print(df.head())
+
+
+
+
+    #Predict
+    data_predict, data_asli = make_predict(df, "Model1", 0.1)
+
+    print("/////////////////////////")
+    print(data_asli)
+    
+    arr_asli = []
+
+    for x in data_asli:
+        arr_asli.append(float(x))
+
+    print("@@@@@@@@@@@@@@@@@@@@@@@@")
+    print(data_predict)
+
+    
+
+    #MAPE
+    predict,asli , arr_error, mean_error = MAPE(data_predict, arr_asli)
+
+
+    data = {
+    'Predict': predict,
+    'Asli': asli,
+    'Error': arr_error
+    }
+
+    # Create a DataFrame from the dictionary
+    df_y = pd.DataFrame(data)
+
+    df_merged = pd.merge(df, df_y, left_index=True, right_index=True)
+
+    df_merged["asli"] = asli
+    df_merged["predict"] = predict
+    df_merged["error"] = arr_error
+
+    total_error = np.sum(arr_error)
+    n_data = len(arr_error)
 
 
     
 
 
+
+    # Convert the Folium asset_map to HTML
+    df_list = df_merged.to_dict(orient='records')
+
+    total_error = np.sum(arr_error)
+    n_data = len(arr_error)
+    
+
+    # Pass the map HTML to the template
+    context = {'map_html': map_html,
+               'df': df_list,
+               'predict': predict,
+               'asli': asli,
+               'error': arr_error,
+               
+               'total_error' : total_error,
+               'n_data': n_data,
+               'mean_error': mean_error,
+
+               }
 
 
 
 
     
     return render(request, 'index3.html', context)
+
+
+def run2(request):
+
+    selected_columns = [
+        'Titik_koordinat',
+        'Nama_debitur',
+        'Nama_Pemberi_Tugas',
+        'Kota_Kabupaten',
+        'LT',
+        'LB',
+        'Tujuan',
+        'Obyek',
+        'Fee_total',
+        'dpp',
+        'ppn',
+        'Indikasi_nilai',
+        'Jumlah_kamar',
+        'Jumlah_kamarmandi',
+        'Jumlah_lantai',
+        'Pusat_kota',
+    ]
+
+    # Query all objects from the Table_rumah model
+    queryset = Table_rumah.objects.all()
+
+    # Convert the queryset to a pandas DataFrame
+    df = pd.DataFrame(list(queryset.values()))
+    #df selected columns
+    df_print = df[selected_columns]
+    
+    #make the map
+    map_html = make_map(df_print)
+
+    # Display the DataFrame
+    print(df.head())
+
+
+
+
+    #Predict
+    data_predict, data_asli = make_predict(df, "Model2", 0.2)
+
+    print("/////////////////////////")
+    print(data_asli)
+    
+    arr_asli = []
+
+    for x in data_asli:
+        arr_asli.append(float(x))
+
+    print("@@@@@@@@@@@@@@@@@@@@@@@@")
+    print(data_predict)
+
+    
+
+    #MAPE
+    predict,asli , arr_error, mean_error = MAPE(data_predict, arr_asli)
+
+
+    data = {
+    'Predict': predict,
+    'Asli': asli,
+    'Error': arr_error
+    }
+
+    # Create a DataFrame from the dictionary
+    df_y = pd.DataFrame(data)
+
+    df_merged = pd.merge(df, df_y, left_index=True, right_index=True)
+
+    df_merged["asli"] = asli
+    df_merged["predict"] = predict
+    df_merged["error"] = arr_error
+    
+
+    df_list = df_merged.to_dict(orient='records')
+
+    # Convert the Folium asset_map to HTML
+    total_error = np.sum(arr_error)
+    n_data = len(arr_error)
+    
+
+    # Pass the map HTML to the template
+    context = {'map_html': map_html,
+               'df': df_list,
+               'predict': predict,
+               'asli': asli,
+               'error': arr_error,
+               
+               'total_error' : total_error,
+               'n_data': n_data,
+               'mean_error': mean_error,
+
+               }
+
+
+
+
+    
+    return render(request, 'index3.html', context)
+
+
+def run3(request):
+
+    selected_columns = [
+        'Titik_koordinat',
+        'Nama_debitur',
+        'Nama_Pemberi_Tugas',
+        'Kota_Kabupaten',
+        'LT',
+        'LB',
+        'Tujuan',
+        'Obyek',
+        'Fee_total',
+        'dpp',
+        'ppn',
+        'Indikasi_nilai',
+        'Jumlah_kamar',
+        'Jumlah_kamarmandi',
+        'Jumlah_lantai',
+        'Pusat_kota',
+    ]
+
+    # Query all objects from the Table_rumah model
+    queryset = Table_rumah.objects.all()
+
+    # Convert the queryset to a pandas DataFrame
+    df = pd.DataFrame(list(queryset.values()))
+    #df selected columns
+    df_print = df[selected_columns]
+    
+    #make the map
+    map_html = make_map(df_print)
+
+    # Display the DataFrame
+    print(df.head())
+
+
+
+
+    #Predict
+    data_predict, data_asli = make_predict(df, "Model3", 0.3)
+
+    print("/////////////////////////")
+    print(data_asli)
+    
+    arr_asli = []
+
+    for x in data_asli:
+        arr_asli.append(float(x))
+
+    print("@@@@@@@@@@@@@@@@@@@@@@@@")
+    print(data_predict)
+
+    
+
+    #MAPE
+    predict,asli , arr_error, mean_error = MAPE(data_predict, arr_asli)
+
+
+    data = {
+    'Predict': predict,
+    'Asli': asli,
+    'Error': arr_error
+    }
+
+    # Create a DataFrame from the dictionary
+    df_y = pd.DataFrame(data)
+
+    df_merged = pd.merge(df, df_y, left_index=True, right_index=True)
+
+    df_merged["asli"] = asli
+    df_merged["predict"] = predict
+    df_merged["error"] = arr_error
+    
+
+    df_list = df_merged.to_dict(orient='records')
+
+    # Convert the Folium asset_map to HTML
+    total_error = np.sum(arr_error)
+    n_data = len(arr_error)
+    
+
+    # Pass the map HTML to the template
+    context = {'map_html': map_html,
+               'df': df_list,
+               'predict': predict,
+               'asli': asli,
+               'error': arr_error,
+               
+               'total_error' : total_error,
+               'n_data': n_data,
+               'mean_error': mean_error,
+
+               }
+
+
+
+    
+    return render(request, 'index3.html', context)
+
+def run4(request):
+
+    selected_columns = [
+        'Titik_koordinat',
+        'Nama_debitur',
+        'Nama_Pemberi_Tugas',
+        'Kota_Kabupaten',
+        'LT',
+        'LB',
+        'Tujuan',
+        'Obyek',
+        'Fee_total',
+        'dpp',
+        'ppn',
+        'Indikasi_nilai',
+        'Jumlah_kamar',
+        'Jumlah_kamarmandi',
+        'Jumlah_lantai',
+        'Pusat_kota',
+    ]
+
+    # Query all objects from the Table_rumah model
+    queryset = Table_rumah.objects.all()
+
+    # Convert the queryset to a pandas DataFrame
+    df = pd.DataFrame(list(queryset.values()))
+    #df selected columns
+    df_print = df[selected_columns]
+    
+    #make the map
+    map_html = make_map(df_print)
+
+    # Display the DataFrame
+    print(df.head())
+
+
+
+
+    #Predict
+    data_predict, data_asli = make_predict(df, "Model4", 0.4)
+
+    print("/////////////////////////")
+    print(data_asli)
+    
+    arr_asli = []
+
+    for x in data_asli:
+        arr_asli.append(float(x))
+
+    print("@@@@@@@@@@@@@@@@@@@@@@@@")
+    print(data_predict)
+
+    
+
+    #MAPE
+    predict,asli , arr_error, mean_error = MAPE(data_predict, arr_asli)
+
+
+    data = {
+    'Predict': predict,
+    'Asli': asli,
+    'Error': arr_error
+    }
+
+    # Create a DataFrame from the dictionary
+    df_y = pd.DataFrame(data)
+
+    df_merged = pd.merge(df, df_y, left_index=True, right_index=True)
+
+    df_merged["asli"] = asli
+    df_merged["predict"] = predict
+    df_merged["error"] = arr_error
+    
+
+
+
+    # Convert the Folium asset_map to HTML
+    df_list = df_merged.to_dict(orient='records')
+
+    
+
+    total_error = np.sum(arr_error)
+    n_data = len(arr_error)
+    
+
+    # Pass the map HTML to the template
+    context = {'map_html': map_html,
+               'df': df_list,
+               'predict': predict,
+               'asli': asli,
+               'error': arr_error,
+               
+               'total_error' : total_error,
+               'n_data': n_data,
+               'mean_error': mean_error,
+
+               }
+
+
+
+
+    
+    return render(request, 'index3.html', context)
+
+
+
+def run5(request):
+
+    selected_columns = [
+        'Titik_koordinat',
+        'Nama_debitur',
+        'Nama_Pemberi_Tugas',
+        'Kota_Kabupaten',
+        'LT',
+        'LB',
+        'Tujuan',
+        'Obyek',
+        'Fee_total',
+        'dpp',
+        'ppn',
+        'Indikasi_nilai',
+        'Jumlah_kamar',
+        'Jumlah_kamarmandi',
+        'Jumlah_lantai',
+        'Pusat_kota',
+    ]
+
+    # Query all objects from the Table_rumah model
+    queryset = Table_rumah.objects.all()
+
+    # Convert the queryset to a pandas DataFrame
+    df = pd.DataFrame(list(queryset.values()))
+    #df selected columns
+    df_print = df[selected_columns]
+    
+    #make the map
+    map_html = make_map(df_print)
+
+    # Display the DataFrame
+    print(df.head())
+
+
+
+
+    #Predict
+    data_predict, data_asli = make_predict(df, "Model5", 0.5)
+
+    print("/////////////////////////")
+    print(data_asli)
+    
+    arr_asli = []
+
+    for x in data_asli:
+        arr_asli.append(float(x))
+
+    print("@@@@@@@@@@@@@@@@@@@@@@@@")
+    print(data_predict)
+
+    
+
+    #MAPE
+    predict,asli , arr_error, mean_error = MAPE(data_predict, arr_asli)
+
+
+    data = {
+    'Predict': predict,
+    'Asli': asli,
+    'Error': arr_error
+    }
+
+    # Create a DataFrame from the dictionary
+    df_y = pd.DataFrame(data)
+
+    df_merged = pd.merge(df, df_y, left_index=True, right_index=True)
+
+    df_merged["asli"] = asli
+    df_merged["predict"] = predict
+    df_merged["error"] = arr_error
+    
+
+
+
+    # Convert the Folium asset_map to HTML
+    df_list = df_merged.to_dict(orient='records')
+
+    
+
+    # Pass the map HTML to the template
+    context = {'map_html': map_html,
+               'df': df_list,
+               'predict': predict,
+               'asli': asli,
+               'error': arr_error,
+               'mean_error': mean_error,
+               }
+
+
+
+
+    
+    return render(request, 'index3.html', context)
+
+

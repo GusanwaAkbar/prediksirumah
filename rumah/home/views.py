@@ -153,9 +153,12 @@ def MAPE(data_predict, y_test):
     arr_error = abs(data_predict-y_test)
     mean_error = np.mean(arr_error)
 
+    error2 = np.abs((data_predict - y_test) / y_test) * 100
+    mape = np.mean(error2)
+
     
 
-    return data_predict, y_test, arr_error, mean_error
+    return data_predict, y_test, arr_error, mean_error, mape
 
 
 
@@ -315,7 +318,7 @@ def run1(request):
     
 
     #MAPE
-    predict,asli , arr_error, mean_error = MAPE(data_predict, arr_asli)
+    predict,asli , arr_error, mean_error, mape = MAPE(data_predict, arr_asli)
 
 
     data = {
@@ -358,6 +361,7 @@ def run1(request):
                'total_error' : total_error,
                'n_data': n_data,
                'mean_error': mean_error,
+               'mape': mape
 
                }
 
@@ -423,7 +427,7 @@ def run2(request):
     
 
     #MAPE
-    predict,asli , arr_error, mean_error = MAPE(data_predict, arr_asli)
+    predict,asli , arr_error, mean_error, mape = MAPE(data_predict, arr_asli)
 
 
     data = {
@@ -459,6 +463,7 @@ def run2(request):
                'total_error' : total_error,
                'n_data': n_data,
                'mean_error': mean_error,
+               'mape':mape
 
                }
 
@@ -524,7 +529,7 @@ def run3(request):
     
 
     #MAPE
-    predict,asli , arr_error, mean_error = MAPE(data_predict, arr_asli)
+    predict,asli , arr_error, mean_error, mape = MAPE(data_predict, arr_asli)
 
 
     data = {
@@ -560,6 +565,8 @@ def run3(request):
                'total_error' : total_error,
                'n_data': n_data,
                'mean_error': mean_error,
+
+               'mape' : mape,
 
                }
 
@@ -623,7 +630,7 @@ def run4(request):
     
 
     #MAPE
-    predict,asli , arr_error, mean_error = MAPE(data_predict, arr_asli)
+    predict,asli , arr_error, mean_error, mape = MAPE(data_predict, arr_asli)
 
 
     data = {
@@ -663,6 +670,7 @@ def run4(request):
                'total_error' : total_error,
                'n_data': n_data,
                'mean_error': mean_error,
+               'mape' : mape,
 
                }
 
@@ -729,7 +737,7 @@ def run5(request):
     
 
     #MAPE
-    predict,asli , arr_error, mean_error = MAPE(data_predict, arr_asli)
+    predict,asli , arr_error, mean_error, mape = MAPE(data_predict, arr_asli)
 
 
     data = {
@@ -748,7 +756,8 @@ def run5(request):
     df_merged["error"] = arr_error
     
 
-
+    total_error = np.sum(arr_error)
+    n_data = len(arr_error)
 
     # Convert the Folium asset_map to HTML
     df_list = df_merged.to_dict(orient='records')
@@ -761,7 +770,11 @@ def run5(request):
                'predict': predict,
                'asli': asli,
                'error': arr_error,
+               
+               'total_error' : total_error,
+               'n_data': n_data,
                'mean_error': mean_error,
+               'mape' : mape,
                }
 
 

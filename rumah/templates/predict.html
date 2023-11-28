@@ -7,7 +7,112 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dashboard - SB Admin</title>
+        <title>Dashboard - SB 
+            ￼
+            id	
+            Bulan	
+            No	
+            Tanggal_laporan	
+            No_laporan	
+            Tanggal_penilaian	
+            NO_SP	
+            Tanggal_SP	
+            Nama_Pemberi_Tugas	
+            Tujuan	
+            Nama_debitur	
+            Obyek	
+            Kota_Kabupaten	
+            LT	
+            LB	
+            CP	
+            Supervisi	
+            Penilai	
+            Pelaksana	
+            Fee_total	
+            dpp	
+            ppn	
+            Indikasi_nilai	
+            Kesimpulan_nilai	
+            Report	
+            Titik_koordinat	
+            Nama	
+            Jumlah_kamar	
+            Jumlah_kamarmandi	
+            Jumlah_lantai	
+            Lokasi	
+            Pusat_kota	
+            ￼	
+            ￼ Edit
+            ￼ Copy
+            ￼ Delete
+            1
+            Juni
+            1
+            02 Juni 2021
+            00137/2.0045-02/PI/07/PS.0205/1/VI/2021
+            28 Mei 2021
+            280501.02-PNR/SIG-MLG/AIG/V/21
+            28 Mei 2021
+            PT. Bank Mandiri (Persero) Tbk.
+            Penjaminan Utang
+            Agung Prasetyo
+            Rumah Tinggal
+            Kab. Malang
+            90
+            108
+            Agung Prasetyo 0823369918889
+            Agus Karma Wijaya
+            Nur Santoso
+            Yurian Nanda Firdhianto
+            1320000
+            1200000
+            120000
+            2400000
+            574000000
+            Short Report
+            -7.913450, 112.665797
+            AGUNG PRASETYO
+            3
+            2
+            2
+            Perum. Bumi Mondoroko Raya Blok GT1 No. 15, Ds. Ba...
+            PinggirKota
+            ￼	
+            ￼ Edit
+            ￼ Copy
+            ￼ Delete
+            2
+            Juni
+            2
+            02 Juni 2021
+            00138/2.0045-02/PI/07/PS.0205/1/VI/2021
+            31 Mei 2021
+            310502.02-PNR/SIG-MLG/AIG/V/21
+            31 Mei 2021
+            PT. Bank CIMB Niaga Tbk.
+            Penjaminan Utang
+            Hariyanto Erifin
+            Rumah Tinggal
+            Kab. Malang
+            78
+            36
+            Hariyanto Erifin 082139157898
+            Agus Karma Wijaya
+            Ahmad Renandy Ghozalie
+            Rizky Hartadi Dewanto
+            1320000
+            1200000
+            120000
+            4500000
+            513000000
+            Short Report
+            -7.951828, 112.576288
+            HARIYANTO ERIFIN
+            2
+            1
+            1
+            Perum. The OZ Blok HE-27, Ds. Karangwidoro, Kec. D...
+            PusatKotaAdmin</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
@@ -141,153 +246,184 @@
                 <main>
                     <div class="container-fluid px-4">
           
-                      <!-- <h1 class="mt-4">Dashboard</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
-                        </ol> -->
-
-                     
+                   
+ <div class="row" >
 
 
-                        <div class="row">
-                            <!-- <div class="col-xl-8">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Peta Aset Kota Madiun
-                                    </div>
-                                  
-                                    <div class="card-body">
-                                       
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        Legend
-                                    </div>
-                                    <div class="card-body">
-                                    
-                                    </div>
-                                </div>
-                            </div> -->
-                        </div>
+<!-- Bootstrap Modal for Simulasi Input -->
+<div class="modal fade" id="inputModal" tabindex="-1" role="dialog" aria-labelledby="inputModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inputModalLabel">Add Simulasi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Simulasi Input Form -->
+                <form id="simulasiForm" method="post" action="{% url 'add_simulasi' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="Nama">Nama:</label>
+                        <input type="text" class="form-control" name="Nama" required>
+                    </div>
+                    <!-- Add other fields based on your Simulasi model -->
+                    <div class="form-group">
+                        <label for="Titik_koordinat">Titik Koordinat:</label>
+                        <input type="text" class="form-control" name="Titik_koordinat" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Kota_Kabupaten">Kota/Kabupaten:</label>
+                        <select class="form-control" name="Kota_Kabupaten" required>
+                            <option value="Kab. Banyuwangi">Kab. Banyuwangi</option>
+                            <option value="Kab. Jember">Kab. Jember</option>
+                            <option value="Kab. Malang">Kab. Malang</option>
+                            <option value="Kota Kediri">Kota Kediri</option>
+                            <option value="Kota Madiun">Kota Madiun</option>
+                            <option value="Kab. Nganjuk">Kab. Nganjuk</option>
+                            <option value="Kota Batu">Kota Batu</option>
+                        </select>
+                    </div>
+                    <!-- ... -->
+
+                    <div class="form-group">
+                        <label for="Pusat_kota">Pusat Kota:</label>
+                        <select class="form-control" name="Pusat_kota" required>
+                            <option value="PinggirKota">Pinggir Kota</option>
+                            <option value="PusatKota">Pusat Kota</option>
+                        </select>
+                    </div>
+
+
+
+
+
+
+                    <div class="form-group">
+                        <label for="Tujuan">Tujuan:</label>
+                        <select class="form-control" name="Tujuan" required>
+                            <option value="Lelang">Lelang</option>
+                            <option value="Penjaminan Utang">Penjaminan Utang</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Obyek">Obyek:</label>
+                        <select class="form-control" name="Obyek" required>
+                            <option value="Rumah Tinggal">Rumah Tinggal</option>
+                            <option value="Tanah Kosong">Tanah Kosong</option>
+                            <option value="Ruko / Rukan">Ruko / Rukan</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="LT">Luas Tanah:</label>
+                        <input type="number" class="form-control" name="LT" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="LB">Luas Bangunan:</label>
+                        <input type="number" class="form-control" name="LB" required>
+                    </div>
+
+                     <div class="form-group">
+                        <label for="LB">Jumlah Kamar:</label>
+                        <input type="number" class="form-control" name="Jumlah_kamar" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="LB">Jumlah Kamar Mandi:</label>
+                        <input type="number" class="form-control" name="Jumlah_kamarmandi" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="LB">Jumlah Lantai:</label>
+                        <input type="number" class="form-control" name="Jumlah_lantai" required>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="Indikasi_nilai">Indikasi Nilai:</label>
+                        <input type="number" class="form-control" name="Indikasi_nilai" required>
+                    </div>
+                    <!-- ... -->
+
+                    <!-- <div class="form-group">
+                        <label for="Prediksi">Prediksi:</label>
+                        <input type="number" class="form-control" name="Prediksi" required>
+                    </div> -->
+                    <!-- ... -->
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Table to display existing data -->
+<div class="container">
+    <h2>Simulasi Data</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Titik Koordinat</th>
+                <th>Kota/Kabupaten</th>
+                <th>Pusat Kota</th>
+                <th>Tujuan</th>
+                <th>Obyek</th>
+                <th>Jumlah_kamar</th>
+                <th>Jumlah_kamarmandi</th>
+                <th>Jumlah_lantai</th>
+                <th>Indikasi Nilai</th>
+                <th>Prediksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for simulasi in simulasi_data %}
+                <tr>
+                    <td>{{ simulasi.Nama }}</td>
+                    <td>{{ simulasi.Titik_koordinat }}</td>
+                    <td>{{ simulasi.Kota_Kabupaten }}</td>
+                    <!-- Add other table cells based on your Simulasi model -->
+                    <td>{{ simulasi.Pusat_kota }}</td>
+                    <td>{{ simulasi.Tujuan }}</td>
+                    <td>{{ simulasi.Obyek }}</td>
+
+                    <td>{{ simulasi.Jumlah_kamar }}</td>
+                    <td>{{ simulasi.Jumlah_kamarmandi }}</td>
+                    <td>{{ simulasi.Jumlah_lantai }}</td>
+            
+                    <td>{{ simulasi.Indikasi_nilai }}</td>
+                    <td>{{ simulasi.Prediksi }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <br>
+    <br>
+
+                            <!-- Add this button to open the modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inputModal">
+            Add Data Prediksi
+        </button>
+
+
+
+                    </div>
 
                         
 
                         
                     </div>
 
-                    <div class="row">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                DataTable
-                            </div>
-                            <div class="card-body">
-                                <table id="datatablesSimple">
-                                
-                                    <thead>
-                                        <tr>
-                                          
-                                            <th>Peruntukan</th>
-                                            <th>Sentralitas</th>
-                                            <th>Visibilitas</th>
-                                            <th>Bangunan</th>
-                                            <th>Luas</th>
-                                            <th>hasil</th>
-                                          
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for item in data %}
-                                            <tr>
-                                              
-                                                <td>{{ item.peruntukan }}</td>
-                                                <td>{{ item.sentralitas }}</td>
-                                                <td>{{ item.visibilitas }}</td>
-                                                <td>{{ item.bangunan }}</td>
-                                                <td>{{ item.luas }}</td>
-                                                <td>{{ item.hasil }}</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                           
-                                            <th>Peruntukan</th>
-                                            <th>Pusat Kota</th>
-                                            <th>Visibilitas</th>
-                                            <th>Bangunan</th>
-                                            <th>Luas</th>
-                                            <th>hasil</th>
-                                          
-                                        </tr>
-                                    </tfoot>
-                                   
-
-                                </table>
-                            </div>
-                        </div>
-                    </div>
 
 
-                    <div class="modal fade" id="inputModal" tabindex="-1" role="dialog" aria-labelledby="inputModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="inputModalLabel">Form Input</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <!-- Form input -->
-                                    <form id="myForm" method="POST" action="{% url 'predict' %}">
-                                        {% csrf_token %}
-                                        <div class="form-group">
-                                            <label for="sentralitas">Sentralitas</label>
-                                            <input type="number" class="form-control" id="sentralitas" name="sentralitas">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="visibilitas">Visibilitas</label>
-                                            <select class="form-control" id="visibilitas" name="visibilitas">
-                                                <option value=3>Strategis</option>
-                                                <option value=2>Sedang</option>
-                                                <option value=1>Kurang</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="bangunan">Bangunan</label>
-                                            <select class="form-control" id="bangunan" name="bangunan">
-                                                <option value=2>Bagus</option>
-                                                <option value=1>Sedang</option>
-                                                <option value=0>Kosong</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="luas">Luas</label>
-                                            <input type="number" class="form-control" id="luas" name="luas">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inputModal">
-                            Tambah Data
-                        </button>
-                        <!-- Modal Form Input -->
-                    </div>
-                    
+
                     
                 </main>
                 <footer class="py-4 bg-light mt-auto">

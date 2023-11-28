@@ -1,6 +1,13 @@
 from django.shortcuts import render
 from home.models import Table_rumah
+from home.models import Simulasi
 from folium import IFrame
+from django.http import JsonResponse
+
+from sklearn.preprocessing import LabelEncoder
+
+
+from django.views.decorators.csrf import csrf_exempt  # Add this line
 
 
 
@@ -98,7 +105,7 @@ def make_map(df):
     return map_html
 
 
-def make_predict(df,model_name,split):
+def make_predict(df,model_name,plit):
 
     df["Kota/Kabupaten"] = df.Kota_Kabupaten
 
@@ -146,6 +153,37 @@ def make_predict(df,model_name,split):
     
     
     return predictions, y_test
+
+
+def predict_single_row(data, model_name):
+    categorical_columns = ["Kota/Kabupaten", "Tujuan", "Obyek", "Pusat_kota"]
+
+    # Convert the input data to a DataFrame
+    new_data = pd.DataFrame([data])
+
+    queryset = Table_rumah.objects.all()
+
+    # Load the label encoder
+    df = pd.DataFrame(list(queryset.values()))
+    df["Kota/Kabupaten"] = df.Kota_Kabupaten
+    
+
+    # Use label encoding for categorical columns
+    for column in categorical_columns:
+    
+        le = LabelEncoder()
+        le.fit(df[column])
+        new_data[column] = le.transform(new_data[column])
+
+    # Load the model
+    loaded_model = load('/home/gusanwa/AA_Programming/huda/rumah/notebook/' + model_name + '.joblib')
+
+    # Make prediction
+    prediction = loaded_model.predict(new_data)
+
+    return prediction[0]  # Assuming the model returns an array, extract the first element
+
+
 
 
 def MAPE(data_predict, y_test):
@@ -782,5 +820,69 @@ def run5(request):
 
     
     return render(request, 'index3.html', context)
+
+
+def simulasi_list(request):
+    simulasi_data = Simulasi.objects.all()
+    return render(request, 'predict.html', {'simulasi_data': simulasi_data})
+
+@csrf_exempt
+def add_simulasi(request):
+    if request.method == 'POST':
+        nama = request.POST.get('Nama')
+        titik_koordinat = request.POST.get('Titik_koordinat')
+        kota_kabupaten = request.POST.get('Kota_Kabupaten')
+        lt = request.POST.get('LT')
+        lb = request.POST.get('LB')
+        tujuan = request.POST.get('Tujuan')
+        obyek = request.POST.get('Obyek')
+        indikasi_nilai = request.POST.get('Indikasi_nilai')
+        jumlah_kamar = request.POST.get('Jumlah_kamar')
+        jumlah_kamarmandi = request.POST.get('Jumlah_kamarmandi')
+        jumlah_lantai = request.POST.get('Jumlah_lantai')
+        pusat_kota = request.POST.get('Pusat_kota')
+
+        data_input = {
+            "Kota/Kabupaten": kota_kabupaten,
+            "LT": int(lt),  # Convert to int
+            "LB": int(lb),  # Convert to int
+            "Tujuan": tujuan,
+            "Obyek": obyek,
+            "Indikasi_nilai": int(indikasi_nilai),  # Convert to float
+            "Jumlah_kamar": int(jumlah_kamar),  # Convert to int
+            "Jumlah_kamarmandi": int(jumlah_kamarmandi),  # Convert to int
+            "Jumlah_lantai": int(jumlah_lantai),  # Convert to int
+            "Pusat_kota": pusat_kota,
+        }
+
+        # Get your model name (replace 'your_model_name' with your actual model name)
+        model_name = 'Model1'
+
+        # Use the predict_single_row function
+        prediksi = predict_single_row(data_input, model_name)
+
+        
+
+        Simulasi.objects.create(
+            Nama=nama,
+            Titik_koordinat=titik_koordinat,
+            Kota_Kabupaten=kota_kabupaten,
+            LT=lt,
+            LB=lb,
+            Tujuan=tujuan,
+            Obyek=obyek,
+            Indikasi_nilai=indikasi_nilai,
+            Jumlah_kamar=jumlah_kamar,
+            Jumlah_kamarmandi=jumlah_kamarmandi,
+            Jumlah_lantai=jumlah_lantai,
+            Pusat_kota=pusat_kota,
+            Prediksi=prediksi,
+        )
+
+
+
+        return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'status': 'error'})
 
 

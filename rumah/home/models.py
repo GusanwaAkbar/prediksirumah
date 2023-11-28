@@ -36,5 +36,22 @@ class Table_rumah(models.Model):
     Pusat_kota = models.CharField(max_length=50, default="Pusat")
 
 
+class Simulasi(models.Model):
+    Nama = models.CharField(max_length=255)
+    Titik_koordinat = models.CharField(max_length=100)
+    Kota_Kabupaten = models.CharField(max_length=100)
+    LT = models.IntegerField()
+    LB = models.IntegerField()
+    Tujuan = models.CharField(max_length=255)
+    Obyek = models.CharField(max_length=255)
+    Indikasi_nilai = models.IntegerField()
+    Jumlah_kamar = models.IntegerField()
+    Jumlah_kamarmandi = models.IntegerField()
+    Jumlah_lantai = models.IntegerField()
+    Pusat_kota = models.CharField(max_length=50)
+    Prediksi = models.FloatField(max_length=255)
+
+    def __str__(self):
+        return self.Nama
     
 

@@ -28,4 +28,11 @@ urlpatterns = [
     path('run3', views.run3),
     path('run4', views.run4),
     path('run5', views.run5),
+
+    #path('predict', views.predict),
+
+    path('simulasi', views.simulasi_list, name='simulasi_list'),
+    path('add_simulasi/', views.add_simulasi, name='add_simulasi'),
+
+   
 ]

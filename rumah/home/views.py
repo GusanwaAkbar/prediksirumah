@@ -27,6 +27,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 
+from sklearn import tree
+import tempfile
+
 
 
 def main_map(request):
@@ -105,7 +108,7 @@ def make_map(df):
     return map_html
 
 
-def make_predict(df,model_name,plit):
+def make_predict(df,model_name,split):
 
     df["Kota/Kabupaten"] = df.Kota_Kabupaten
 
@@ -149,10 +152,19 @@ def make_predict(df,model_name,plit):
     print("===========================")
     print(X_test)
 
+    tree_texts = []
+    for i, tree_in_forest in enumerate(loaded_model.estimators_):
+        tree_text = tree.export_text(tree_in_forest, feature_names=X_train.columns.tolist())
+        tree_texts.append(tree_text)
+
+    # Combine text representations into one
+    combined_text = "\n".join(tree_texts)
+
+    # Make predictions on the test set
     predictions = loaded_model.predict(X_test)
     
     
-    return predictions, y_test
+    return predictions, y_test, combined_text
 
 
 def predict_single_row(data, model_name):
@@ -340,7 +352,7 @@ def run1(request):
 
 
     #Predict
-    data_predict, data_asli = make_predict(df, "Model1", 0.1)
+    data_predict, data_asli, tree = make_predict(df, "Model1", 0.1)
 
     print("/////////////////////////")
     print(data_asli)
@@ -399,7 +411,9 @@ def run1(request):
                'total_error' : total_error,
                'n_data': n_data,
                'mean_error': mean_error,
-               'mape': mape
+               'mape': mape,
+
+               'tree': tree,
 
                }
 
@@ -449,7 +463,7 @@ def run2(request):
 
 
     #Predict
-    data_predict, data_asli = make_predict(df, "Model2", 0.2)
+    data_predict, data_asli , tree = make_predict(df, "Model2", 0.2)
 
     print("/////////////////////////")
     print(data_asli)
@@ -501,7 +515,8 @@ def run2(request):
                'total_error' : total_error,
                'n_data': n_data,
                'mean_error': mean_error,
-               'mape':mape
+               'mape':mape,
+               'tree':tree,
 
                }
 
@@ -551,7 +566,7 @@ def run3(request):
 
 
     #Predict
-    data_predict, data_asli = make_predict(df, "Model3", 0.3)
+    data_predict, data_asli, tree = make_predict(df, "Model3", 0.3)
 
     print("/////////////////////////")
     print(data_asli)
@@ -605,6 +620,7 @@ def run3(request):
                'mean_error': mean_error,
 
                'mape' : mape,
+               'tree' : tree,
 
                }
 
@@ -652,7 +668,7 @@ def run4(request):
 
 
     #Predict
-    data_predict, data_asli = make_predict(df, "Model4", 0.4)
+    data_predict, data_asli, tree = make_predict(df, "Model4", 0.4)
 
     print("/////////////////////////")
     print(data_asli)
@@ -709,6 +725,8 @@ def run4(request):
                'n_data': n_data,
                'mean_error': mean_error,
                'mape' : mape,
+
+               'tree' : tree,
 
                }
 
@@ -759,7 +777,7 @@ def run5(request):
 
 
     #Predict
-    data_predict, data_asli = make_predict(df, "Model5", 0.5)
+    data_predict, data_asli , tree = make_predict(df, "Model5", 0.5)
 
     print("/////////////////////////")
     print(data_asli)
@@ -813,6 +831,7 @@ def run5(request):
                'n_data': n_data,
                'mean_error': mean_error,
                'mape' : mape,
+               'tree': tree,
                }
 
 
